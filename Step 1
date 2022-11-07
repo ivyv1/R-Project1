@@ -1,0 +1,5 @@
+get_wiki_covid19_page<-function()
+wiki_base_url<-"url link"
+query_param<-list(title="provider title")
+Response<-GET(wiki_base_url,query=query_param)
+Return(response)

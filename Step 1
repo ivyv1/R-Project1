@@ -3,3 +3,25 @@ wiki_base_url<-"url link"
 query_param<-list(title="provider title")
 Response<-GET(wiki_base_url,query=query_param)
 Return(response)
+
+#below the right way to extract the table from wiki page.
+
+get_wiki_covid19_page<-function(){
+    wiki_base_url<-"https://en.wikipedia.org/w/index.php?"
+    query_param<-list(title="Template:COVID-19_testing_by_country")
+    response<-GET(wiki_base_url,query=query_param)
+    return(response)
+    }
+    
+#Run your funtion to see whether you got the status 200 or not; 
+Covid19 <- get_wiki_covid19_page()
+Covid19
+
+#Now use the read_html function in rvest library to get the root html node from response
+alfa <- read_html(Covid19)
+#Get the first table in the HTML root node using html_node function
+table_node <- html_nodes(alfa,"table")
+#Read the table node as a data frame using html_table function
+data_frame <- html_table(table_node[[2]])
+head(data_frame)
+ 
